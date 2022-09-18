@@ -53,9 +53,8 @@ open class ReadingByteBuffer(bufferSize: Int = 1024, private val source: suspend
     fun extend(newBuffer: ByteBuffer): Buffer
 
     object Empty : Buffer {
-      private val emptyBuffer = ByteBuffer.allocate(0)
       override fun remaining(): Int = 0
-      override fun get(size: Int): ByteBuffer = emptyBuffer
+      override fun get(size: Int): ByteBuffer = ByteBuffer.allocate(size).apply { limit(0) }
       override fun extend(newBuffer: ByteBuffer): Buffer = WholeBuffer(newBuffer)
       override fun toString(): String = "Empty"
     }
